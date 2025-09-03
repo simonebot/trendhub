@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrendFacile - I Trend del Momento</title>
+    
+    <style>
+        /* Stile semplice ma carino */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #764ba2;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .trend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .trend-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .trend-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .trend-badge {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 0.8em;
+            margin-bottom: 10px;
+        }
+        
+        .trend-title {
+            color: #333;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        
+        .trend-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .trend-stats {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .trend-volume {
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .trend-growth {
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            opacity: 0.9;
+        }
+        
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 1.2em;
+            margin: 50px 0;
+        }
+        
+        /* Spazio per la pubblicità */
+        .ad-space {
+            background: #f0f0f0;
+            border: 2px dashed #ccc;
+            padding: 50px 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin: 30px 0;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- INTESTAZIONE -->
+        <header>
+            <h1>🔥 TrendFacile</h1>
+            <p class="subtitle">I trend più cercati del momento aggiornati ogni ora!</p>
+        </header>
+        
+        <!-- SPAZIO PUBBLICITÀ TOP -->
+        <div class="ad-space">
+            Spazio per Google AdSense - Pubblicità qui
+        </div>
+        
+        <!-- GRIGLIA DEI TREND -->
+        <div id="trends" class="trend-grid">
+            <!-- I trend appariranno qui -->
+            <div class="loading">⏰ Caricamento trend in corso...</div>
+        </div>
+        
+        <!-- SPAZIO PUBBLICITÀ BOTTOM -->
+        <div class="ad-space">
+            Spazio per Google AdSense - Pubblicità qui
+        </div>
+    </div>
+    <script src="trend.js"></script>
+    <script>
+        // DATI DI ESEMPIO - Poi li prenderemo da internet!
+        const trendsEsempio = [
+            {
+                titolo: "iPhone 16 Pro - Le Novità",
+                descrizione: "Apple presenta il nuovo iPhone con intelligenza artificiale avanzata. Display sempre acceso e batteria migliorata.",
+                volume: "2.5M ricerche",
+                crescita: "+340%",
+                categoria: "HOT 🔥"
+            },
+            {
+                titolo: "Serie TV Netflix del Momento",
+                descrizione: "La nuova serie che tutti stanno guardando. Record di visualizzazioni in 48 ore.",
+                volume: "1.8M ricerche",
+                crescita: "+220%",
+                categoria: "TRENDING"
+            },
+            {
+                titolo: "Metodo Dimagrimento 2025",
+                descrizione: "Il nuovo metodo che promette risultati in 30 giorni. I medici sono divisi.",
+                volume: "980K ricerche",
+                crescita: "+180%",
+                categoria: "NUOVO"
+            },
+            {
+                titolo: "Bitcoin Nuovo Record",
+                descrizione: "La criptovaluta supera un nuovo massimo storico. Gli investitori sono ottimisti.",
+                volume: "3.2M ricerche",
+                crescita: "+890%",
+                categoria: "HOT 🔥"
+            },
+            {
+                titolo: "Champions League Gol Virale",
+                descrizione: "Il gol che sta facendo il giro del mondo. 100 milioni di visualizzazioni.",
+                volume: "2.1M ricerche",
+                crescita: "+450%",
+                categoria: "SPORT"
+            },
+            {
+                titolo: "PS5 Pro Disponibile",
+                descrizione: "Finalmente disponibile la nuova console Sony. Prestazioni raddoppiate.",
+                volume: "1.5M ricerche",
+                crescita: "+320%",
+                categoria: "GAMING"
+            }
+        ];
+        
+        // FUNZIONE PER MOSTRARE I TREND
+        function mostraTrends() {
+            const container = document.getElementById('trends');
+            container.innerHTML = ''; // Pulisci
+            
+            trendsEsempio.forEach(trend => {
+                const card = document.createElement('div');
+                card.className = 'trend-card';
+                card.innerHTML = `
+                    <span class="trend-badge">${trend.categoria}</span>
+                    <h2 class="trend-title">${trend.titolo}</h2>
+                    <p class="trend-description">${trend.descrizione}</p>
+                    <div class="trend-stats">
+                        <span class="trend-volume">👁 ${trend.volume}</span>
+                        <span class="trend-growth">📈 ${trend.crescita}</span>
+                    </div>
+                    <button onclick="apriTrend('${trend.titolo}')">Leggi di più →</button>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        // FUNZIONE QUANDO CLICCHI SU UN TREND
+        function apriTrend(titolo) {
+            alert('Qui si aprirebbe la pagina del trend: ' + titolo);
+            // In futuro aprirà una pagina vera con tutti i dettagli
+        }
+        
+        // AGGIORNA OGNI 30 SECONDI (simulato)
+        function aggiornaAutomatico() {
+            console.log('Aggiornamento trend...');
+            // Qui in futuro prenderemo dati veri da internet
+            mostraTrends();
+        }
+        
+        // AVVIA IL SITO
+        setTimeout(() => {
+            mostraTrends();
+        }, 1000); // Aspetta 1 secondo poi mostra i trend
+        
+        // Aggiorna ogni 30 secondi
+        setInterval(aggiornaAutomatico, 30000);
+    </script>
+</body>
+</html>
